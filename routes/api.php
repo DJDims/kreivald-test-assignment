@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PositionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -13,3 +14,5 @@ Route::prefix('users')->group(function() {
 });
 
 Route::get('token', [TokenController::class, 'generateToken']);
+
+Route::get('positions', [PositionController::class, 'index']);

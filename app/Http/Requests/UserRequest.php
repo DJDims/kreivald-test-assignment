@@ -16,10 +16,11 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|min:2|max:60',
-            'email'=>'required|string|email|unique:users,email',
-            'phone'=>'required|string|regex:/^[\+]{0,1}380([0-9]{9})$/|unique:users,phone',
-            'photo'=>'required|file|mimes:jpg,jpeg|max:5120|dimensions:min_width=70,min_height=70',
+            'name' => 'required|string|min:2|max:60',
+            'email' => 'required|string|email|unique:users,email',
+            'phone' => 'required|string|regex:/^[\+]{0,1}380([0-9]{9})$/|unique:users,phone',
+            'photo' => 'required|file|mimes:jpg,jpeg|max:5120|dimensions:min_width=70,min_height=70',
+            'position_id' => 'required|integer|exists:positions,id',
         ];
     }
 
@@ -50,7 +51,8 @@ class UserRequest extends FormRequest
         return [
             'photo' => [
                 'max' => 'The photo may not be greater than 5 Mbytes.',
-                'dimensions' => 'Minimum size of photo 70x70px.'
+                'dimensions' => 'Minimum size of photo 70x70px.',
+                'exists:positions,id' => 'The position id must be an existing position.',
             ],
         ];
     }
