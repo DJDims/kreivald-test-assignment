@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaginationRequest;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UsersPaginationResource;
 use App\Services\UserService;
 use App\Services\PhotoService;
 use App\Http\Requests\UserRequest;
-use App\Http\Resources\UserResponseResource;
+use App\Http\Resources\UserCreatedResource;
+use Illuminate\Http\Request;
 
 
 class UserController extends Controller
@@ -17,21 +21,31 @@ class UserController extends Controller
         $this->service = $service;
     }
 
-    public function store(UserRequest $request): UserResponseResource
+    public function store(UserRequest $request): UserCreatedResource
     {
         $data = $request->validated();
         $user = $this->service->store($data, $request->file('photo'));
-        return new UserResponseResource($user);
+        return new UserCreatedResource($user);
 
     }
 
-    public function index()
+    public function index(PaginationRequest $request)
     {
-        return $this->service->index();
+        $paginationData = $request->paginationData();
+        $data = $this->service->index($paginationData);
+        if ($paginationData['page'] > $data->lastPage()) return response()->json([
+            'success' => false,
+            'message' => 'Page not found.'
+        ]);
+        return new UsersPaginationResource($data);
     }
 
     public function show($id)
     {
-        return $this->service->show($id);
+        $user = $this->service->show($id);
+        return response()->json([
+            'success' => true,
+            'user' => new UserResource($user),
+        ]);
     }
 }

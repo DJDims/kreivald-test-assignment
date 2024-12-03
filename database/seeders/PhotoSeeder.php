@@ -23,6 +23,6 @@ class PhotoSeeder extends Seeder
         $b = dechex(rand(100, 255));
         $image = Image::create(70, 70)->fill('#'.$r.$g.$b);
         $path = 'user_photos/'.$i.'.jpg';
-        $image->save(Storage::path($path));
+        $image->save(Storage::disk('public')->path($path));
     }
 }

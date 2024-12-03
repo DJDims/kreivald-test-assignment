@@ -10,13 +10,13 @@ class UserService
     public function store($data, $photo)
     {
         $path = PhotoService::processImage($photo);
-        $data['photo'] = $path;
+        $data['photo'] = 'storage/'.$path;
         return User::create($data);
     }
 
-    public function index(): Collection
+    public function index($paginationData)
     {
-        return User::all();
+        return User::paginate($paginationData['count'], ["*"], 'page', $paginationData['page']);
     }
 
     public function show($id)

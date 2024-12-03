@@ -14,7 +14,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => '+380' . $this->faker->numerify('#########'),
-            'photo' => 'user_photos/'.$this->faker->numberBetween(0,9).'.jpg',
+            'photo' => 'storage/user_photos/'.$this->faker->numberBetween(0,9).'.jpg',
             'position_id' => Position::get()->random()->id,
             'created_at' => now(),
             'updated_at' => now(),
