@@ -30,7 +30,7 @@ class ValidateTokenMiddleware
             'message' => 'The token expired',
         ], 401);
 
-        $token->delete();
+        $request->merge(['token' => $token]);
 
         return $next($request);
     }

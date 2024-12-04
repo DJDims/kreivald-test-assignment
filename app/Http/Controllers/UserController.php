@@ -25,6 +25,7 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $user = $this->service->store($data, $request->file('photo'));
+        $request->get('token')->delete();
         return new UserCreatedResource($user);
 
     }
