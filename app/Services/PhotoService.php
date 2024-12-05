@@ -12,9 +12,6 @@ class PhotoService
 
     public static function processImage($file): string
     {
-        if (!is_dir(Storage::disk('public')->path('tmp'))) mkdir(Storage::disk('public')->path('tmp'), 0755, true);
-        if (!is_dir(Storage::disk('public')->path('user_photos'))) mkdir(Storage::disk('public')->path('user_photos'), 0755, true);
-
         $tmpPath = $file->store('tmp', 'public');
 
         Tinify::setKey(env('TINIFY_API_KEY'));
