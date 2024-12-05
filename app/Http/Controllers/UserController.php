@@ -38,7 +38,7 @@ class UserController extends Controller
             'success' => false,
             'message' => 'Page not found.'
         ]);
-        return new UsersPaginationResource($data);
+        return new UsersPaginationResource($data->appends(['count' => $paginationData['count']]));
     }
 
     public function show($id)
