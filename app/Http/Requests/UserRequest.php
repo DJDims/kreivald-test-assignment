@@ -26,17 +26,17 @@ class UserRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-//        if(
-//            ($validator->errors()->has('email') &&
-//            str_contains($validator->errors()->get('email')[0], 'already been taken')) ||
-//            ($validator->errors()->has('phone')) ||
-//            str_contains($validator->errors()->get('phone')[0], 'already been taken'))
-//        {
-//            throw new HttpResponseException(response()->json([
-//                'success' => false,
-//                'message' => 'User with this email or phone already exists',
-//            ], 409));
-//        }
+       if(
+           ($validator->errors()->has('email') &&
+           str_contains($validator->errors()->get('email')[0], 'already been taken')) ||
+           ($validator->errors()->has('phone')) ||
+           str_contains($validator->errors()->get('phone')[0], 'already been taken'))
+       {
+           throw new HttpResponseException(response()->json([
+               'success' => false,
+               'message' => 'User with this email or phone already exists',
+           ], 409));
+       }
         throw new HttpResponseException(
             response()->json([
                 'success' => false,
