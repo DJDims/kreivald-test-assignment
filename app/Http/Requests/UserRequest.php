@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
        if(
            ($validator->errors()->has('email') &&
            str_contains($validator->errors()->get('email')[0], 'already been taken')) ||
-           ($validator->errors()->has('phone')) ||
+           ($validator->errors()->has('phone')) &&
            str_contains($validator->errors()->get('phone')[0], 'already been taken'))
        {
            throw new HttpResponseException(response()->json([
